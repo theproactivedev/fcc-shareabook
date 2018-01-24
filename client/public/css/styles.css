@@ -1,0 +1,49 @@
+.twitter-btn {
+  background-color: transparent;
+  color: #2fa5f9;
+  border: none;
+  padding: 0;
+}
+
+.modalButton {
+  display: inline;
+}
+
+ul.dropdown-menu li.active a {
+  background-color: white;
+  color: #000;
+}
+
+.searchIcon {
+  border:none;
+  box-shadow: none;
+  background-color: transparent;
+  color: #8db7fc;
+}
+
+.searchBtn {
+  border: none;
+  border-bottom: 1px solid #8db7fc;
+  box-shadow: none;
+}
+
+.searchBtn:focus {
+  box-shadow: none;
+  border-top: ;
+}
+
+footer p {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+footer a {
+  color: #e82c8d;
+  text-align: center;
+}
+
+footer a:hover {
+  color: #000;
+}

@@ -3,6 +3,17 @@
 var mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
+var BookSchema = new Schema({
+  title: String,
+  subtitle: String,
+  authors: String,
+  publishedDate: String,
+  description: String,
+  googleBookId: String,
+  imageUrl: String,
+  infoLink: String
+});
+
 var UserSchema = new Schema({
   user: {
     type: {
@@ -13,7 +24,8 @@ var UserSchema = new Schema({
       city: String,
       state: String
     }
-  }
+  },
+  books: [BookSchema]
 });
 
 UserSchema.statics.upsertTwitterUser = function(token, tokenSecret, profile, cb) {

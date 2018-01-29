@@ -1,3 +1,14 @@
+html {
+  height: 100%;
+}
+
+body {
+  position: relative;
+  min-height: 100%;
+}
+
+/* Navigation Component */
+
 .twitter-btn {
   background-color: transparent;
   color: #2fa5f9;
@@ -5,19 +16,24 @@
   padding: 0;
 }
 
-.modalButton {
-  display: inline;
-}
-
 ul.dropdown-menu li.active a {
   background-color: white;
   color: #000;
 }
 
+/* Modal Component */
+
+.modalButton {
+  display: inline;
+}
+
+/* Search Books */
+
 .searchIcon {
   border:none;
   box-shadow: none;
   background-color: transparent;
+  border-bottom: 1px solid #8db7fc;
   color: #8db7fc;
 }
 
@@ -32,11 +48,85 @@ ul.dropdown-menu li.active a {
   border-top: ;
 }
 
-footer p {
-  text-align: center;
+/* Book Results */
+.card {
+  height: 430px;
+  -webkit-box-shadow: 0 8px 6px -6px black;
+   -moz-box-shadow: 0 8px 6px -6px black;
+  /* box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19); */
+  margin-bottom: 15px;
+  /* padding: 0; */
+  /* margin: 0 15px 15px; */
+}
+
+.card .image {
+  position: relative;
+  overflow: hidden;
+  height: 230px;
+}
+
+.card img {
+  width: 100%;
+  max-width: 100%;
+  transition: all .2s ease-in-out;
+}
+
+.card .info,
+.card .bookBtn {
+  padding: 8px 12px;
+}
+
+.card .bookBtn:hover {
+  color: #fff;
+  background-color: #2fa5f9;
+}
+
+.bookBtn p {
+  margin-bottom: 0;
+}
+
+.image:hover img,
+.image:focus img {
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.image::before {
+  content: "";
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(52, 73, 94, 0.75);
+}
+
+.image:hover img:before,
+.image:focus img:before {
+  display: block;
+}
+
+#left-tabs-example {
+  padding-bottom: 40px;
+}
+
+/* Footer */
+
+footer {
   position: absolute;
   bottom: 0;
+  right: 0;
+  left: 0;
   width: 100%;
+}
+
+footer p {
+  text-align: center;
+  padding-top:15px;
+  padding-bottom: 15px;
+  margin-bottom: 0;
 }
 
 footer a {

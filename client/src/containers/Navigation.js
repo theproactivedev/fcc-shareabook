@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TwitterLogin from 'react-twitter-auth';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import {
@@ -50,32 +50,29 @@ class Navigation extends Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Nav pullRight>
-            <LinkContainer to="/allBooks">
-              <NavItem eventKey={'/allBooks'} href={'/allBooks'}>All Books</NavItem>
-            </LinkContainer>
-
             {this.props.isUserAuthenticated &&
-
-              <NavDropdown eventKey={'account'} title='Account' id='basic-nav-dropdown'>
-                <LinkContainer to="/profile">
-                <MenuItem eventKey={'/profile'}><i className="fa fa-user-o" aria-hidden="true"></i> Profile</MenuItem>
-                </LinkContainer>
-                <MenuItem divider />
+              <Nav pullRight>
+              <LinkContainer to="/allBooks">
+                <NavItem eventKey={'/allBooks'} href={'/allBooks'}><i className="fa fa-book" aria-hidden="true"></i> All Books</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/profile">
+              <NavItem eventKey={'/profile'}><i className="fa fa-user-o" aria-hidden="true"></i> Profile</NavItem>
+              </LinkContainer>
                 <LinkContainer to="/">
-                <MenuItem eventKey={'logout'} onClick={this.logout}><i className="fa fa-sign-out" aria-hidden="true"></i> Sign Out</MenuItem>
+                <NavItem eventKey={'logout'} onClick={this.logout}><i className="fa fa-sign-out" aria-hidden="true"></i> Sign Out</NavItem>
                 </LinkContainer>
-              </NavDropdown>
+              </Nav>
             }
 
             {!this.props.isUserAuthenticated &&
+              <Nav pullRight>
               <NavItem eventKey={'/twitter-authenticate'}>
                 <TwitterLogin className="twitter-btn" showIcon={false} loginUrl="http://localhost:3000/api/v1/auth/twitter"
                 onFailure={this.onFailed} onSuccess={this.onSuccess}
                 requestTokenUrl="http://localhost:3000/api/v1/auth/twitter/reverse" />
               </NavItem>
+              </Nav>
             }
-          </Nav>
         </Navbar.Collapse>
       </Navbar>
     );

@@ -13,6 +13,9 @@ let app = express();
 require('dotenv').config();
 let db = "mongodb://admin_eirin:shareab00k@ds249727.mlab.com:49727/sharebooks";
 mongoose.connect(process.env.MONGO_URI || db);
+let database = mongoose.connection;
+database.on('error', console.error.bind(console, 'mongodb connection error'));
+database.once('open', () => console.log('mongodb connected'));
 
 var corsOption = {
   origin: true,

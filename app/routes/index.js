@@ -2,6 +2,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const request = require('request');
 const jwt = require('jsonwebtoken');
+const fetch = require('node-fetch');
 // const configAuth = require("../config/auth.js");
 let router = require("express").Router();
 let Users = require('../models/Users.js');
@@ -17,13 +18,11 @@ module.exports = function(app, passport) {
   };
 
   var generateToken = function (req, res, next) {
-    console.log("Generate token");
     req.token = createToken(req.auth);
     return next();
   };
 
   var sendToken = function (req, res) {
-    console.log("Send token");
     res.setHeader('x-auth-token', req.token);
     return res.status(200).send(JSON.stringify(req.user));
   };
@@ -54,7 +53,6 @@ module.exports = function(app, passport) {
 
   router.route('/auth/twitter/reverse')
   .post(function(req, res) {
-    console.log("Auth twitter reverse");
     request.post({
       url: 'https://api.twitter.com/oauth/request_token',
       oauth: {
@@ -73,7 +71,6 @@ module.exports = function(app, passport) {
 
   router.route('/auth/twitter')
     .post(function(req, res, next) {
-      console.log("Auth twitter");
       request.post({
         url: `https://api.twitter.com/oauth/access_token?oauth_verifier`,
         oauth: {
@@ -127,6 +124,89 @@ module.exports = function(app, passport) {
       } },
       function(err) {
       if (err) { console.log(err); }
+    });
+  });
+
+  app.route("/search/:title").get(function(req, res) {
+    var link = "https://www.googleapis.com/books/v1/volumes?q="+ req.params.title + "&printType=books&key=" + process.env.BOOK_API_KEY;
+    console.log("It's here!");
+    fetch(link)
+      .then(response => response.json(),
+      error => console.log(error))
+      .then(json => {
+        if (json === undefined) {
+          res.json({error: "No books found."});
+        } else {
+          let books = json.items.map(book => {
+            let { title, subtitle, authors, publishedDate, description, imageLinks, infoLink } = book.volumeInfo;
+  		  		let imageUrl = imageLinks && imageLinks.thumbnail.replace(/&zoom=1&edge=curl/, '');
+  		  		return {
+  		  			title,
+  		  			subtitle,
+  		  			authors,
+  		  			publishedDate,
+  		  			description,
+  		  			googleBookId: book.id,
+  		  			imageUrl,
+  		  			infoLink
+  		  		};
+          });
+          res.json(books);
+        }
+      });
+  });
+
+  app.route("/addBook").post(authenticate, getCurrentUser, function(req, res) {
+    let obj = {
+      title: req.body.title,
+      subtitle: req.body.subtitle,
+      authors: req.body.authors,
+      publishedDate: req.body.publishedDate,
+      description: req.body.description,
+      googleBookId: req.body.googleBookId,
+      imageUrl: req.body.imageUrl,
+      infoLink: req.body.infoLink
+    };
+
+    Users.update(
+      { "_id": req.auth.id },
+      { $push : { "books" : obj } },
+      { upsert: true, new: true},
+      function(err) {
+        if (err) console.log(err);
+      }
+    );
+  });
+
+  app.route("/removeBook").post(authenticate, getCurrentUser,
+    function(req, res) {
+      Users.findOneAndUpdate(
+        {"_id": req.auth.id},
+        {$pull : { "books" : { googleBookId : req.body.bookId } } },
+        function(err) {
+          if (err) console.log(err);
+        }
+      );
+    });
+
+  app.route("/addedBooks").get(authenticate, getCurrentUser,
+  function(req, res) {
+    Users.findOne({
+        "_id" : req.auth.id
+    }, function(err, data) {
+      if (err) { console.log(err); }
+      if (data) { res.json(data.books); }
+    });
+  });
+
+  app.route("/allBooks").get(function(req, res) {
+    Users.find({}, function(err, users) {
+      var booksMap = [];
+      users.forEach(function(user) {
+        booksMap = booksMap.concat(user.books);
+      });
+      console.log(booksMap.length);
+      res.json(booksMap);
     });
   });
 };

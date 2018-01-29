@@ -1,35 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ModalButton from './ModalButton';
-import OwnedBooks from './OwnedBooks';
-import AddBook from './AddBook';
+import ModalButton from './modal/ModalButton';
+import AddBook from './books/AddBook';
+import AddedBooks from './books/AddedBooks';
+import { Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
 
 class Profile extends Component {
-
-  constructor() {
-    super();
-    this.state = {
-      name: "",
-      state: "",
-      city: ""
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      name: this.props.user.name || "",
-      state: this.props.user.state || "",
-      city: this.props.user.city || ""
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      name: nextProps.user.name || "",
-      state: nextProps.user.state || "",
-      city: nextProps.user.city || ""
-    });
-  }
 
   render() {
     return (
@@ -37,11 +13,25 @@ class Profile extends Component {
         <h2>Profile</h2>
         <div>
         <h3>{this.props.user.userName} <ModalButton /></h3>
-        <p><i className="fa fa-user" aria-hidden="true"></i> {this.state.name}</p>
-        <p><i className="fa fa-map-marker" aria-hidden="true"></i> {this.state.city}, {this.state.state}</p>
+        <p><i className="fa fa-user" aria-hidden="true"></i> {this.props.user.name}</p>
+        <p><i className="fa fa-map-marker" aria-hidden="true"></i> {this.props.user.city}, {this.props.user.state}</p>
         </div>
-        <AddBook />
-        <OwnedBooks />
+        <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+          <Row className="clearfix">
+            <Col sm={2}>
+              <Nav bsStyle="pills" stacked>
+                <NavItem eventKey="first"><i className="fa fa-search-plus" aria-hidden="true"></i> Add Book</NavItem>
+                <NavItem eventKey="second"><i className="fa fa-shopping-cart" aria-hidden="true"></i> Books Added</NavItem>
+              </Nav>
+            </Col>
+            <Col sm={10}>
+              <Tab.Content animation>
+                <Tab.Pane eventKey="first"><AddBook /></Tab.Pane>
+                <Tab.Pane eventKey="second"><AddedBooks /></Tab.Pane>
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>;
       </div>
     );
   }

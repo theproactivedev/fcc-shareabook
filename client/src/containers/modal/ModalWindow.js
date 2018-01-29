@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, FormGroup, ControlLabel, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { getUserProfile, saveUserProfile } from '../actions.js';
+import { getUserProfile, saveUserProfile } from '../../actions.js';
 
 class ModalWindow extends Component {
 
@@ -37,12 +37,6 @@ class ModalWindow extends Component {
   handleSubmit(e) {
     // e.preventDefault();
     this.props.dispatch(saveUserProfile({
-      name: this.state.name,
-      city: this.state.city,
-      state: this.state.statePlace,
-      token: this.props.user.userToken
-    }));
-    console.log(JSON.stringify({
       name: this.state.name,
       city: this.state.city,
       state: this.state.statePlace,

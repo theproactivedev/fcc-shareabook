@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { FormGroup, FormControl, InputGroup } from 'react-bootstrap';
+import { FormGroup, FormControl, InputGroup, Alert } from 'react-bootstrap';
 import { searchBook, addBook } from '../../actions.js';
 import { connect } from 'react-redux';
-import Results from '../Results';
+import Results from './Results';
 
 class AddBook extends Component {
 
@@ -34,6 +34,7 @@ class AddBook extends Component {
   }
 
   addBook(item) {
+    item.owner = this.props.user.userId;
     this.props.addBook(item, this.props.user.userToken);
     this.setState({
       book: "",
@@ -53,15 +54,17 @@ class AddBook extends Component {
     				<FormControl type="text" className="searchBtn" value={this.state.book} onChange={this.handleBookChange} onKeyDown={this.handleKeyDown} placeholder="Search book..." />
     			</InputGroup>
     		</FormGroup>
+        </form>
+        {this.state.added &&
+          <div>
+          <Alert bsStyle="primary" className="primary">
+            <p>You have just added a book. Search for more.</p>
+          </Alert>
+          </div>
+        }
         {this.state.book !== "" &&
           <Results method={this.addBook} items={this.props.books} isFetching={this.props.isFetching} buttonText="Add to List" />
         }
-        {this.state.added &&
-          <div>
-          <p>Added</p>
-          </div>
-        }
-        </form>
       </div>
     );
   }

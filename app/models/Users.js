@@ -8,10 +8,20 @@ var BookSchema = new Schema({
   subtitle: String,
   authors: String,
   publishedDate: String,
-  description: String,
   googleBookId: String,
   imageUrl: String,
-  infoLink: String
+  infoLink: String,
+  owner: String,
+  borrower: String
+});
+
+var BookRequestSchema = new Schema({
+  title: String,
+  googleBookId: String,
+  owner: String,
+  borrower: String,
+  rejected: Boolean,
+  accepted: Boolean
 });
 
 var UserSchema = new Schema({
@@ -25,7 +35,9 @@ var UserSchema = new Schema({
       state: String
     }
   },
-  books: [BookSchema]
+  books: [BookSchema],
+  requestedBooksFromUsers: [BookRequestSchema],
+  bookRequests: [BookRequestSchema]
 });
 
 UserSchema.statics.upsertTwitterUser = function(token, tokenSecret, profile, cb) {

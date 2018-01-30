@@ -1,25 +1,53 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Results from '../Results';
-import { getAllBooks } from '../../actions.js';
+import { Alert } from 'react-bootstrap';
+import Results from './Results';
+import { getAllBooks, requestBook } from '../../actions.js';
 
 class AllBooks extends Component {
+
+  constructor() {
+    super();
+    this.state = {requested: false, message: "You have just requested a book."};
+    this.hideMessage = this.hideMessage.bind(this);
+  }
 
   componentWillMount() {
     this.props.dispatch(getAllBooks());
   }
 
   requestBook(item) {
-    console.log(item.googleBookId);
+    if (item.owner === this.props.user.userId) {
+      this.setState({message: "This is your book. You already have this."});
+    } else {
+      let book = {
+        title: item.title,
+        googleBookId: item.googleBookId,
+        owner: item.owner,
+        borrower: this.props.user.userId
+      };
+      this.props.dispatch(requestBook(book, this.props.user.userToken));
+    }
+    this.setState({requested: true});
+  }
+
+  hideMessage() {
+    this.setState({requested: false});
   }
 
   render() {
     return (
-      <div className="container">
+      <div className="container parentDiv">
         <h3>My Books</h3>
+        {this.state.requested &&
+          <Alert bsStyle="success" className="primary" onClick={this.hideMessage}>
+            <p>{this.state.message}</p>
+          </Alert>
+        }
         {this.props.allBooks !== undefined  &&
           <Results method={this.requestBook.bind(this)} items={this.props.allBooks} isFetching={this.props.isFetching} buttonText="Request Book" />
         }
+
       </div>
     );
   }

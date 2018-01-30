@@ -69,6 +69,14 @@ class ModalWindow extends Component {
     this.setInitialDetails();
   }
 
+  componentWillUnmount() {
+    this.setState({
+      name: "",
+      city: "",
+      state: ""
+    });
+  }
+
   render() {
     return (
       <div>

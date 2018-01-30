@@ -138,14 +138,13 @@ module.exports = function(app, passport) {
           res.json({error: "No books found."});
         } else {
           let books = json.items.map(book => {
-            let { title, subtitle, authors, publishedDate, description, imageLinks, infoLink } = book.volumeInfo;
+            let { title, subtitle, authors, publishedDate, imageLinks, infoLink } = book.volumeInfo;
   		  		let imageUrl = imageLinks && imageLinks.thumbnail.replace(/&zoom=1&edge=curl/, '');
   		  		return {
   		  			title,
   		  			subtitle,
   		  			authors,
   		  			publishedDate,
-  		  			description,
   		  			googleBookId: book.id,
   		  			imageUrl,
   		  			infoLink
@@ -162,10 +161,11 @@ module.exports = function(app, passport) {
       subtitle: req.body.subtitle,
       authors: req.body.authors,
       publishedDate: req.body.publishedDate,
-      description: req.body.description,
       googleBookId: req.body.googleBookId,
       imageUrl: req.body.imageUrl,
-      infoLink: req.body.infoLink
+      infoLink: req.body.infoLink,
+      owner: req.body.owner,
+      borrower: ""
     };
 
     Users.update(
@@ -189,6 +189,102 @@ module.exports = function(app, passport) {
       );
     });
 
+  app.route("/requestBook").post(authenticate, getCurrentUser,
+    function(req, res) {
+      let obj = {
+        title: req.body.title,
+        googleBookId: req.body.googleBookId,
+        owner: req.body.owner,
+        borrower: req.body.borrower,
+        accepted: false,
+        rejected: false
+      };
+
+      Users.update(
+        { "_id": req.auth.id },
+        { $push : { "bookRequests" : obj } },
+        { upsert: true, new: true},
+        function(err) {
+          if (err) console.log(err);
+        }
+      );
+
+    Users.update(
+      {"user.userId" : req.body.owner},
+      { $push : { "requestedBooksFromUsers" : obj} },
+      { upsert: true, new: true},
+      function(err) {
+        if (err) console.log(err);
+      }
+    );
+  });
+
+  app.route("/removeBookRequest").post(authenticate, getCurrentUser,
+    function(req, res) {
+      Users.findOneAndUpdate(
+        {"_id": req.auth.id},
+        {$pull : { "bookRequests" : { googleBookId : req.body.bookId } } },
+        function(err) {
+          if (err) console.log(err);
+      });
+
+      Users.findOneAndUpdate(
+        {"user.userId" : req.body.owner},
+        { $pull : { "requestedBooksFromUsers" : { googleBookId: req.body.bookId } } },
+        function(err) {
+          if (err) console.log(err);
+        }
+      );
+  });
+
+  app.route("/acceptRequest").post(authenticate, getCurrentUser,
+    function(req, res) {
+
+      Users.findOneAndUpdate(
+        { "user.userId" : req.body.borrower,
+          "bookRequests.googleBookId" : req.body.googleBookId },
+        { $set : {
+          "bookRequests.$.accepted" : true
+        } },
+        function(err) {
+        if (err) { console.log(err); }
+      });
+
+      Users.findOneAndUpdate(
+        { "_id" : req.auth.id,
+          "requestedBooksFromUsers.googleBookId" : req.body.googleBookId },
+        {$set : {
+          "requestedBooksFromUsers.$.accepted" : true
+        } },
+        function(err) {
+        if (err) { console.log(err); }
+      });
+  });
+
+  app.route("/rejectRequest").post(authenticate, getCurrentUser,
+    function(req, res) {
+
+      Users.findOneAndUpdate(
+        { "user.userId" : req.body.borrower,
+          "bookRequests.googleBookId" : req.body.googleBookId },
+        { $set : {
+          "bookRequests.$.rejected" : true
+        } },
+        function(err) {
+        if (err) { console.log(err); }
+      });
+
+      Users.findOneAndUpdate(
+        { "_id" : req.auth.id,
+          "requestedBooksFromUsers.googleBookId" : req.body.googleBookId },
+        {$set : {
+          "requestedBooksFromUsers.$.rejected" : true
+        } },
+        function(err) {
+        if (err) { console.log(err); }
+      });
+  });
+
   app.route("/addedBooks").get(authenticate, getCurrentUser,
   function(req, res) {
     Users.findOne({
@@ -207,6 +303,26 @@ module.exports = function(app, passport) {
       });
       console.log(booksMap.length);
       res.json(booksMap);
+    });
+  });
+
+  app.route("/bookRequests").get(authenticate, getCurrentUser,
+  function(req, res) {
+    Users.findOne({
+        "_id" : req.auth.id
+    }, function(err, data) {
+      if (err) { console.log(err); }
+      if (data) { res.json(data.bookRequests); }
+    });
+  });
+
+  app.route("/userRequests").get(authenticate, getCurrentUser,
+  function(req, res) {
+    Users.findOne({
+        "_id" : req.auth.id
+    }, function(err, data) {
+      if (err) { console.log(err); }
+      if (data) { res.json(data.requestedBooksFromUsers); }
     });
   });
 };

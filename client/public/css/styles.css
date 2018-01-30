@@ -7,6 +7,22 @@ body {
   min-height: 100%;
 }
 
+.parentDiv {
+  padding-bottom: 40px;
+}
+
+.jumbotron {
+  background-color: #cde2f2;
+  border: 1px solid #337ab7;
+  color: #000;
+}
+
+/* Alert */
+.primary {
+  background-color: #337ab7;
+  color: #fff;
+}
+
 /* Navigation Component */
 
 .twitter-btn {
@@ -27,34 +43,13 @@ ul.dropdown-menu li.active a {
   display: inline;
 }
 
-/* Search Books */
-
-.searchIcon {
-  border:none;
-  box-shadow: none;
-  background-color: transparent;
-  border-bottom: 1px solid #8db7fc;
-  color: #8db7fc;
-}
-
-.searchBtn {
-  border: none;
-  border-bottom: 1px solid #8db7fc;
-  box-shadow: none;
-}
-
-.searchBtn:focus {
-  box-shadow: none;
-  border-top: ;
-}
-
 /* Book Results */
 .card {
   height: 430px;
   -webkit-box-shadow: 0 8px 6px -6px black;
    -moz-box-shadow: 0 8px 6px -6px black;
   /* box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19); */
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   /* padding: 0; */
   /* margin: 0 15px 15px; */
 }
@@ -108,8 +103,39 @@ ul.dropdown-menu li.active a {
   display: block;
 }
 
+/* Tabs */
+
 #left-tabs-example {
-  padding-bottom: 40px;
+  padding-top: 30px;
+}
+
+.iconBtn {
+  cursor: pointer;
+}
+
+.iconBtn:hover {
+  color: #999;
+}
+
+/* Search Books */
+
+.searchIcon {
+  border:none;
+  box-shadow: none;
+  background-color: transparent;
+  border-bottom: 1px solid #8db7fc;
+  color: #8db7fc;
+}
+
+.searchBtn {
+  border: none;
+  border-bottom: 1px solid #8db7fc;
+  box-shadow: none;
+}
+
+.searchBtn:focus {
+  box-shadow: none;
+  border-top: ;
 }
 
 /* Footer */

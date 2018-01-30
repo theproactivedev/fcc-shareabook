@@ -1,6 +1,7 @@
 import {
   ADD_USER, REMOVE_USER, SAVE_USER_PROFILE, SAVE_SEARCHED_BOOKS, FETCH_BOOKS_PENDING,
-  ADD_BOOK, REMOVE_BOOK, FETCH_BOOKS_RECEIVED, SAVE_ADDED_BOOKS, ADD_ALL_BOOKS
+  ADD_BOOK, REMOVE_BOOK, FETCH_BOOKS_RECEIVED, SAVE_ADDED_BOOKS, ADD_ALL_BOOKS,
+  SAVE_BOOK_REQUEST, REMOVE_BOOK_REQUEST, SAVE_USER_REQUEST, ACCEPT_REQUEST, REJECT_REQUEST
 } from './actions.js';
 
 export const initialState = {
@@ -16,6 +17,8 @@ export const initialState = {
   },
   allBooks: [],
   addedBooks: [],
+  requestedBooksFromUsers: [],
+  bookRequests: [],
   books: [],
   error: ""
 };
@@ -64,6 +67,16 @@ const rootReducer = (state=initialState, action) => {
         ...state,
         addedBooks: action.books
       }
+    case SAVE_BOOK_REQUEST:
+      return {
+        ...state,
+        bookRequests: action.book
+      }
+    case SAVE_USER_REQUEST:
+      return {
+        ...state,
+        requestedBooksFromUsers: action.books
+      }
     case ADD_BOOK:
       return {
         ...state,
@@ -72,6 +85,11 @@ const rootReducer = (state=initialState, action) => {
           action.book
         ]
       };
+    case ADD_ALL_BOOKS:
+      return {
+        ...state,
+        allBooks: action.books
+      }
     case REMOVE_BOOK:
       return {
         ...state,
@@ -79,11 +97,13 @@ const rootReducer = (state=initialState, action) => {
           return book.googleBookId !== action.id
         })
       };
-    case ADD_ALL_BOOKS:
+    case REMOVE_BOOK_REQUEST:
       return {
         ...state,
-        allBooks: action.books
-      }
+        bookRequests: state.bookRequests.filter(book => {
+          return book.googleBookId !== action.id
+        })
+      };
     case FETCH_BOOKS_PENDING:
       return {
         ...state,
@@ -94,6 +114,18 @@ const rootReducer = (state=initialState, action) => {
         ...state,
         isFetching: false
       }
+    case ACCEPT_REQUEST:
+      return state.requestedBooksFromUsers.map(book =>
+        (book.googleBookId === action.id)
+          ? {...book, accepted: true}
+          : book
+      )
+    case REJECT_REQUEST:
+      return state.requestedBooksFromUsers.map(book =>
+        (book.googleBookId === action.id)
+          ? {...book, rejected: true}
+          : book
+      )
     default:
       return state;
   }

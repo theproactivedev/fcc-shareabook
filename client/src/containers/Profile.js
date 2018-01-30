@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import ModalButton from './modal/ModalButton';
 import AddBook from './books/AddBook';
 import AddedBooks from './books/AddedBooks';
+import Requests from './bookRequest/Requests';
+import RequestsFromUsers from './bookRequest/RequestsFromUsers';
 import { Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
 
 class Profile extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container parentDiv">
         <h2>Profile</h2>
         <div>
         <h3>{this.props.user.userName} <ModalButton /></h3>
@@ -22,12 +24,16 @@ class Profile extends Component {
               <Nav bsStyle="pills" stacked>
                 <NavItem eventKey="first"><i className="fa fa-search-plus" aria-hidden="true"></i> Add Book</NavItem>
                 <NavItem eventKey="second"><i className="fa fa-shopping-cart" aria-hidden="true"></i> Books Added</NavItem>
+                <NavItem eventKey="third">Book Requests</NavItem>
+                <NavItem eventKey="fourth">User Requests</NavItem>
               </Nav>
             </Col>
             <Col sm={10}>
               <Tab.Content animation>
                 <Tab.Pane eventKey="first"><AddBook /></Tab.Pane>
                 <Tab.Pane eventKey="second"><AddedBooks /></Tab.Pane>
+                <Tab.Pane eventKey="third"><Requests /></Tab.Pane>
+                <Tab.Pane eventKey="fourth"><RequestsFromUsers /></Tab.Pane>
               </Tab.Content>
             </Col>
           </Row>

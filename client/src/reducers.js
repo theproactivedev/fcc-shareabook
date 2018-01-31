@@ -48,13 +48,14 @@ const rootReducer = (state=initialState, action) => {
         }
       };
     case SAVE_USER_PROFILE:
+    console.log(action.userProfile.name + " Name");
       return {
         ...state,
         user: {
           ...state.user,
-          name: action.user.name || "",
-          city: action.user.city || "",
-          state: action.user.state || ""
+          name: action.userProfile.name || "",
+          city: action.userProfile.city || "",
+          state: action.userProfile.state || ""
         }
       };
     case SAVE_SEARCHED_BOOKS:

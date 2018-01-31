@@ -17,10 +17,29 @@ body {
   color: #000;
 }
 
+.activeLink {
+  color: #000;
+}
+
+li.signOut a {
+  color: #9d9d9d !important;
+  background-color: #101010 !important;
+}
+
+li.signOut a:hover {
+  color: #fff !important;
+}
+
 /* Alert */
 .primary {
   background-color: #337ab7;
   color: #fff;
+}
+
+/* Spinner */
+.spinner {
+  padding-top: 30px;
+  text-align: center;
 }
 
 /* Navigation Component */

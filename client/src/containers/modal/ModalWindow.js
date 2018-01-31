@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, FormGroup, ControlLabel, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { getUserProfile, saveUserProfile } from '../../actions.js';
+import { saveUserProfile } from '../../actions.js';
 
 class ModalWindow extends Component {
 
@@ -53,19 +53,15 @@ class ModalWindow extends Component {
     });
   }
 
-  componentWillMount() {
-    this.props.dispatch(getUserProfile(this.props.user.userToken));
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      name: nextProps.user.name || "",
+      city: nextProps.user.city || "",
+      statePlace: nextProps.user.state || ""
+    });
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     name: nextProps.user.name || "",
-  //     city: nextProps.user.city || "",
-  //     statePlace: nextProps.user.state || ""
-  //   });
-  // }
-
-  componentDidMount() {
+  componentWillMount() {
     this.setInitialDetails();
   }
 

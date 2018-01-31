@@ -31,7 +31,7 @@ function saveToState(userProfile) {
   console.log(JSON.stringify(userProfile));
   return {
     type: SAVE_USER_PROFILE,
-    user: userProfile
+    userProfile
   };
 }
 

@@ -11,9 +11,14 @@ class Navigation extends Component {
   constructor(props) {
     super(props);
 
+    this.state={
+      activeItem: ""
+    };
+
     this.onSuccess = this.onSuccess.bind(this);
     this.onFailed = this.onFailed.bind(this);
     this.logout = this.logout.bind(this);
+    this.activate = this.activate.bind(this);
   }
 
   onSuccess(response) {
@@ -42,6 +47,10 @@ class Navigation extends Component {
     localStorage.removeItem("$k00b");
   }
 
+  activate(item) {
+    this.setState({activeItem: item});
+  }
+
   render() {
     const navbarInstance = (
       <Navbar inverse collapseOnSelect>
@@ -53,13 +62,13 @@ class Navigation extends Component {
             {this.props.isUserAuthenticated &&
               <Nav pullRight>
               <LinkContainer to="/allBooks">
-                <NavItem eventKey={'/allBooks'} href={'/allBooks'}><i className="fa fa-book" aria-hidden="true"></i> All Books</NavItem>
+                <NavItem eventKey={'/allBooks'} href={'/allBooks'} className={this.state.activeItem === "allbooks" ? "activeLink" : ""} onClick={() => {this.activate("allbooks")}}><i className="fa fa-book" aria-hidden="true"></i> All Books</NavItem>
               </LinkContainer>
               <LinkContainer to="/profile">
-              <NavItem eventKey={'/profile'}><i className="fa fa-user-o" aria-hidden="true"></i> Profile</NavItem>
+              <NavItem eventKey={'/profile'} className={this.state.activeItem === "profile" ? "activeLink" : ""} onClick={() => {this.activate("profile")}}><i className="fa fa-user-o" aria-hidden="true"></i> Profile</NavItem>
               </LinkContainer>
                 <LinkContainer to="/">
-                <NavItem eventKey={'logout'} onClick={this.logout}><i className="fa fa-sign-out" aria-hidden="true"></i> Sign Out</NavItem>
+                <NavItem eventKey={'logout'} onClick={this.logout} className="signOut"><i className="fa fa-sign-out" aria-hidden="true"></i> Sign Out</NavItem>
                 </LinkContainer>
               </Nav>
             }

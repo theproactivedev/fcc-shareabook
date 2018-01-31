@@ -11,7 +11,7 @@ class RequestList extends Component {
     if (items !== undefined) {
       for (let i = 0; i < items.length; i++) {
         const book = (
-          <ListGroupItem>{items[i].title}
+          <ListGroupItem key={i}>{items[i].title}
           { items[i].rejected &&
             <span>&nbsp;&nbsp;(rejected)</span>
           }

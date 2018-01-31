@@ -83,10 +83,8 @@ module.exports = function(app, passport) {
         if (err) {
           return res.status(500).send({message: err.message});
         }
-        console.log(body);
         const bodyString = '{ "' + body.replace(/&/g, '", "').replace(/=/g, '": "') + '"}';
         const parsedBody = JSON.parse(bodyString);
-        console.log(bodyString);
         req.body['oauth_token'] = parsedBody.oauth_token;
         req.body['oauth_token_secret'] = parsedBody.oauth_token_secret;
         req.body['user_id'] = parsedBody.user_id;
@@ -129,7 +127,6 @@ module.exports = function(app, passport) {
 
   app.route("/search/:title").get(function(req, res) {
     var link = "https://www.googleapis.com/books/v1/volumes?q="+ req.params.title + "&printType=books&key=" + process.env.BOOK_API_KEY;
-    console.log("It's here!");
     fetch(link)
       .then(response => response.json(),
       error => console.log(error))
@@ -301,7 +298,6 @@ module.exports = function(app, passport) {
       users.forEach(function(user) {
         booksMap = booksMap.concat(user.books);
       });
-      console.log(booksMap.length);
       res.json(booksMap);
     });
   });

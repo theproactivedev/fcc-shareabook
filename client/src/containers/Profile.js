@@ -6,8 +6,13 @@ import AddedBooks from './books/AddedBooks';
 import Requests from './bookRequest/Requests';
 import RequestsFromUsers from './bookRequest/RequestsFromUsers';
 import { Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
+import { getUserProfile } from '../actions.js';
 
 class Profile extends Component {
+
+  componentWillMount() {
+    this.props.dispatch(getUserProfile(this.props.user.userToken));
+  }
 
   render() {
     return (

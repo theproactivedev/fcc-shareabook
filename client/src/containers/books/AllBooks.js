@@ -38,7 +38,7 @@ class AllBooks extends Component {
   render() {
     return (
       <div className="container parentDiv">
-        <h3>My Books</h3>
+        <h2>My Books</h2>
         {this.state.requested &&
           <Alert bsStyle="success" className="primary" onClick={this.hideMessage}>
             <p>{this.state.message}</p>

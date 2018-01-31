@@ -57,7 +57,7 @@ class AddBook extends Component {
         </form>
         {this.state.added &&
           <div>
-          <Alert bsStyle="primary" className="primary">
+          <Alert bsStyle="success" className="primary">
             <p>You have just added a book. Search for more.</p>
           </Alert>
           </div>

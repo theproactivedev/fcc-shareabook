@@ -16,13 +16,15 @@ class Profile extends Component {
 
   render() {
     return (
+      <div>
+      <div className="profile">
+      <div className="container">
+      <h2 className="name">{this.props.user.userName} <ModalButton /></h2>
+      <p><i className="fa fa-user" aria-hidden="true"></i> {this.props.user.name}</p>
+      <p><i className="fa fa-map-marker" aria-hidden="true"></i> {this.props.user.city}, {this.props.user.state}</p>
+      </div>
+      </div>
       <div className="container parentDiv">
-        <h2>Profile</h2>
-        <div>
-        <h3>{this.props.user.userName} <ModalButton /></h3>
-        <p><i className="fa fa-user" aria-hidden="true"></i> {this.props.user.name}</p>
-        <p><i className="fa fa-map-marker" aria-hidden="true"></i> {this.props.user.city}, {this.props.user.state}</p>
-        </div>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
           <Row className="clearfix">
             <Col sm={2}>
@@ -43,6 +45,7 @@ class Profile extends Component {
             </Col>
           </Row>
         </Tab.Container>;
+      </div>
       </div>
     );
   }

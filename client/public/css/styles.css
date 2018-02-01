@@ -5,16 +5,33 @@ html {
 body {
   position: relative;
   min-height: 100%;
+  font-family: 'Muli', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+h1, h2 {
+  font-family: 'Poppins', cursive;
+  font-weight: 700;
+}
+
+h3 {
+  font-family: 'Roboto Slab', cursive;
+  font-weight: 700;
+}
+
+h2 small {
+  font-size: 20px;
 }
 
 .parentDiv {
   padding-bottom: 40px;
 }
 
-.jumbotron {
-  background-color: #cde2f2;
-  border: 1px solid #337ab7;
-  color: #000;
+/* RESET */
+
+.navbar {
+  margin-bottom: 0;
 }
 
 .activeLink {
@@ -30,10 +47,65 @@ li.signOut a:hover {
   color: #fff !important;
 }
 
-/* Alert */
 .primary {
   background-color: #337ab7;
   color: #fff;
+}
+
+/* CAROUSEL */
+
+#carousel img {
+  width: 100%;
+  max-width:100%;
+  height: 100vh;
+}
+
+#carousel .overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  display: table;
+}
+
+#carousel h1, #carousel h2 {
+  font-size: 60px;
+  text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+}
+
+#carousel p {
+  font-size: 25px;
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+             0px 8px 13px rgba(0,0,0,0.1),
+             0px 18px 23px rgba(0,0,0,0.1);
+}
+
+.carousel-caption {
+  top: 35%;
+  bottom: auto;
+}
+
+.item:nth-child(1) {
+  background: url('../assets/cesar-viteri-426877.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+  height: 100vh;
+}
+
+.item:nth-child(2) {
+  background: url('../assets/tom-hermans-264015.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+  height: 100vh;
+}
+
+.item:nth-child(3) {
+  background: url('../assets/rawpixel-com-191131.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+  height: 100vh;
 }
 
 /* Spinner */
@@ -56,6 +128,10 @@ ul.dropdown-menu li.active a {
   color: #000;
 }
 
+.navbar-collapse.in {
+  overflow-y: hidden;
+}
+
 /* Modal Component */
 
 .modalButton {
@@ -64,13 +140,23 @@ ul.dropdown-menu li.active a {
 
 /* Book Results */
 .card {
-  height: 430px;
-  -webkit-box-shadow: 0 8px 6px -6px black;
-   -moz-box-shadow: 0 8px 6px -6px black;
-  /* box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 0 5px 17px 0 rgba(0, 0, 0, 0.19); */
+  height: 440px;
   margin-bottom: 25px;
-  /* padding: 0; */
-  /* margin: 0 15px 15px; */
+  padding-top: 15px;
+  box-shadow: 0 8px 6px -6px #999;
+  transition: all .3s;
+}
+
+.card:hover {
+  -webkit-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
+   -moz-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.card p {
+  font-size: 14.5px;
+  /* font-family: 'Muli', sans-serif; */
+  font-weight: 300;
 }
 
 .card .image {
@@ -88,6 +174,10 @@ ul.dropdown-menu li.active a {
 .card .info,
 .card .bookBtn {
   padding: 8px 12px;
+}
+
+.card .bookBtn {
+  transition: all .3s;
 }
 
 .card .bookBtn:hover {
@@ -120,6 +210,33 @@ ul.dropdown-menu li.active a {
 .image:hover img:before,
 .image:focus img:before {
   display: block;
+}
+
+/* Profile */
+div.profile {
+  background-color: #ffcd00;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  color: #fff;
+}
+
+.profile h2 {
+  margin: 0;
+  text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+  font-size: 50px;
+}
+
+h2.name {
+  margin-bottom: 15px;
+}
+
+.profile h2 small {
+  text-shadow: 2px 4px 3px rgba(0,0,0,0.1);
+}
+
+.profile p {
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.2),
+    0px 8px 13px rgba(0,0,0,0.1);
 }
 
 /* Tabs */
@@ -160,11 +277,18 @@ ul.dropdown-menu li.active a {
 /* Footer */
 
 footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   right: 0;
   left: 0;
   width: 100%;
+  padding-bottom: 10px;
+  padding-top: 40px;
+  background-color: #2f2f30;
+}
+
+footer h4 {
+  color: #fff;
 }
 
 footer p {
@@ -172,13 +296,38 @@ footer p {
   padding-top:15px;
   padding-bottom: 15px;
   margin-bottom: 0;
+  color: #c4c4c4;
+}
+
+footer .row p {
+  text-align: left;
+}
+
+footer .row div {
+  border-right: 1px solid #fff;
+}
+
+footer .row div:last-of-type {
+  border-right: none;
+}
+
+footer .row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  flex-wrap: wrap;
+}
+footer .row > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
 }
 
 footer a {
-  color: #e82c8d;
+  color: #ffcd00;
   text-align: center;
 }
 
 footer a:hover {
-  color: #000;
+  color: #ddd;
 }

@@ -37,8 +37,11 @@ class AllBooks extends Component {
 
   render() {
     return (
+      <div>
+      <div className="profile">
+      <div className="container"><h2>all books</h2></div>
+      </div>
       <div className="container parentDiv">
-        <h2>My Books</h2>
         {this.state.requested &&
           <Alert bsStyle="success" className="primary" onClick={this.hideMessage}>
             <p>{this.state.message}</p>
@@ -48,6 +51,7 @@ class AllBooks extends Component {
           <Results method={this.requestBook.bind(this)} items={this.props.allBooks} isFetching={this.props.isFetching} buttonText="Request Book" />
         }
 
+      </div>
       </div>
     );
   }

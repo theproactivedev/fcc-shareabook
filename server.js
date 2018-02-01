@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
 const path = require('path');
 
 let routes = require('./app/routes/index.js');
@@ -24,17 +22,10 @@ var corsOption = {
   exposedHeaders: ['x-auth-token']
 };
 app.use(cors(corsOption));
-// app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-// app.use(session({
-//   secret: 'sharebooks',
-//   resave: true,
-//   saveUninitialized: true
-// }));
 app.use(express.static(path.join(__dirname, 'client/public')));
 app.use(passport.initialize());
-// app.use(passport.session());
 
 require('./app/config/passport.js')(passport);
 

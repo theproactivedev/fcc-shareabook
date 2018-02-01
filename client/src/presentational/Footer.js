@@ -24,7 +24,7 @@ const Footer = () => {
           <p>View my portfolio <a href="http://eiringonzales.com/portfolio.php">here.</a></p>
         </div>
       </div>
-      <p>By <a href="http://eiringonzales.com/">Eirin Gonzales</a> | <a href="https://github.com/theproactivedev/voting-app-fcc">Github Repo</a></p>
+      <p>By <a href="http://eiringonzales.com/">Eirin Gonzales</a> | <a href="https://github.com/theproactivedev/fcc-shareabook">Github Repo</a></p>
     </div>
     </footer>
   );

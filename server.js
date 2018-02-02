@@ -24,7 +24,7 @@ var corsOption = {
 app.use(cors(corsOption));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, 'client/public')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(passport.initialize());
 
 require('./app/config/passport.js')(passport);
@@ -32,7 +32,7 @@ require('./app/config/passport.js')(passport);
 routes(app, passport);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/public/index.html'));
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
 app.listen(process.env.PORT || 3001, function() {

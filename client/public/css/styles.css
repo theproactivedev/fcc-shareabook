@@ -52,6 +52,11 @@ li.signOut a:hover {
   color: #fff;
 }
 
+.alert {
+  margin-bottom: 0;
+  margin-top: 20px;
+}
+
 /* CAROUSEL */
 
 #carousel img {

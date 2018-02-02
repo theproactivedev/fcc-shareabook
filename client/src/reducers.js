@@ -116,17 +116,23 @@ const rootReducer = (state=initialState, action) => {
         isFetching: false
       }
     case ACCEPT_REQUEST:
-      return state.requestedBooksFromUsers.map(book =>
-        (book.googleBookId === action.id)
-          ? {...book, accepted: true}
-          : book
-      )
+      return {
+        ...state,
+        requestedBooksFromUsers: state.requestedBooksFromUsers.map(book =>
+          (book.googleBookId === action.id)
+            ? {...book, accepted: true}
+            : book
+        )
+      }
     case REJECT_REQUEST:
-      return state.requestedBooksFromUsers.map(book =>
-        (book.googleBookId === action.id)
-          ? {...book, rejected: true}
-          : book
-      )
+      return {
+        ...state,
+        requestedBooksFromUsers: state.requestedBooksFromUsers.map(book =>
+          (book.googleBookId === action.id)
+            ? {...book, rejected: true}
+            : book
+        )
+      }
     default:
       return state;
   }

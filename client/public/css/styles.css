@@ -76,12 +76,12 @@ li.signOut a:hover {
 }
 
 #carousel h1, #carousel h2 {
-  font-size: 60px;
+  font-size: 40px;
   text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
 }
 
 #carousel p {
-  font-size: 25px;
+  font-size: 20px;
   text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
              0px 8px 13px rgba(0,0,0,0.1),
              0px 18px 23px rgba(0,0,0,0.1);
@@ -308,14 +308,6 @@ footer .row p {
   text-align: left;
 }
 
-footer .row div {
-  border-right: 1px solid #fff;
-}
-
-footer .row div:last-of-type {
-  border-right: none;
-}
-
 footer .row {
   display: -webkit-box;
   display: -webkit-flex;
@@ -335,4 +327,24 @@ footer a {
 
 footer a:hover {
   color: #ddd;
+}
+
+@media screen and (min-width: 900px) {
+  #carousel h1, #carousel h2 {
+    font-size: 55px;
+  }
+
+  #carousel p {
+    font-size: 25px;
+  }
+}
+
+@media screen and (min-width: 945px) {
+  footer .row div {
+    border-right: 1px solid #fff;
+  }
+
+  footer .row div:last-of-type {
+    border-right: none;
+  }
 }
